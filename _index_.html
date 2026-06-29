@@ -1,0 +1,611 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .pf {
+    font-family: 'Inter', sans-serif;
+    background: #0A0F1E;
+    color: #E8EEFF;
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    border-bottom: 0.5px solid #1E2A4A;
+    position: sticky;
+    top: 0;
+    background: #0A0F1E;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: #00D4FF;
+    letter-spacing: 0.05em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: #8899BB;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #00D4FF; }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #00D4FF;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: #00D4FF;
+  }
+  .hero-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #F0F4FF;
+    margin-bottom: 0.4rem;
+  }
+  .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.85em;
+    background: #00D4FF;
+    vertical-align: -0.05em;
+    margin-left: 4px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .hero-title {
+    font-size: 1.1rem;
+    color: #8899BB;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero-title span { color: #FFB347; }
+  .hero-bio {
+    font-size: 1rem;
+    color: #C0CCDD;
+    line-height: 1.75;
+    max-width: 620px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 2.5rem;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 0.5px solid;
+  }
+  .badge-blue { border-color: #00D4FF44; color: #00D4FF; background: #00D4FF0D; }
+  .badge-gold { border-color: #FFB34744; color: #FFB347; background: #FFB3470D; }
+  .badge-gray { border-color: #3A4568; color: #8899BB; background: #1A2135; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 10px 22px;
+    background: #00D4FF;
+    color: #0A0F1E;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 10px 22px;
+    background: transparent;
+    color: #8899BB;
+    border: 0.5px solid #3A4568;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: #00D4FF; color: #00D4FF; }
+
+  /* DIVIDER */
+  .divider {
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, #1E2A4A 30%, #1E2A4A 70%, transparent);
+    margin: 0 2rem;
+  }
+
+  /* SECTION */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #00D4FF;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: #1E2A4A;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .skill-card {
+    background: #0F1628;
+    border: 0.5px solid #1E2A4A;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+  .skill-card:hover {
+    border-color: #00D4FF33;
+    transform: translateY(-2px);
+  }
+  .skill-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .skill-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #E8EEFF;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .skill-sub {
+    font-size: 11px;
+    color: #4A5878;
+  }
+  .skill-level {
+    margin-top: 10px;
+    height: 2px;
+    background: #1E2A4A;
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%;
+    background: #00D4FF;
+    border-radius: 1px;
+  }
+  .skill-fill.gold { background: #FFB347; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .project-card {
+    background: #0F1628;
+    border: 0.5px solid #1E2A4A;
+    border-radius: 10px;
+    padding: 1.4rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .project-card:hover { border-color: #00D4FF44; }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .project-card.cyan::before { background: #00D4FF; }
+  .project-card.gold::before { background: #FFB347; }
+  .project-card.purple::before { background: #8B6FD4; }
+  .project-card.green::before { background: #3DCA7A; }
+  .proj-client {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #4A5878;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .proj-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #E8EEFF;
+    margin-bottom: 8px;
+  }
+  .proj-desc {
+    font-size: 13px;
+    color: #6A7A99;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .proj-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    background: #1A2135;
+    border: 0.5px solid #2A3550;
+    border-radius: 3px;
+    color: #6A7A99;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 0.5px;
+    background: #1E2A4A;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00D4FF;
+    border: 2px solid #0A0F1E;
+    margin-left: -3px;
+  }
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #4A5878;
+    margin-bottom: 4px;
+  }
+  .tl-role {
+    font-size: 15px;
+    font-weight: 500;
+    color: #E8EEFF;
+    margin-bottom: 2px;
+  }
+  .tl-company {
+    font-size: 13px;
+    color: #00D4FF;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .tl-desc {
+    font-size: 13px;
+    color: #6A7A99;
+    line-height: 1.6;
+  }
+
+  /* CONTACT */
+  .contact-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .contact-card {
+    background: #0F1628;
+    border: 0.5px solid #1E2A4A;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .contact-card:hover { border-color: #00D4FF33; }
+  .contact-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: #00D4FF0D;
+    border: 0.5px solid #00D4FF22;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-icon i { color: #00D4FF; font-size: 17px; }
+  .contact-label {
+    font-size: 11px;
+    color: #4A5878;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 2px;
+  }
+  .contact-value {
+    font-size: 13px;
+    color: #C0CCDD;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 0.5px solid #1E2A4A;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #2A3550;
+  }
+  .footer span { color: #3A4568; }
+</style>
+
+<div class="pf">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Portefólio técnico de Carlos Vissesse, Full Stack Developer em Luanda, Angola</h2>
+
+  <nav class="nav">
+    <span class="nav-logo">cv@qcc:~$<span class="cursor"></span></span>
+    <ul class="nav-links">
+      <li><a href="#">stack</a></li>
+      <li><a href="#">projectos</a></li>
+      <li><a href="#">percurso</a></li>
+      <li><a href="#">contacto</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Full Stack Developer · Luanda, Angola</div>
+    <div class="hero-name mono">Carlos Vissesse<span class="cursor"></span></div>
+    <div class="hero-title">Arquitecto de sistemas para <span>África</span></div>
+    <p class="hero-bio">
+      Desenvolvo plataformas críticas para banca, telecomunicações e contact centres em Angola.
+      Do front-end em React ao infra em Nginx e SQL Server, construo de ponta a ponta —
+      com foco em robustez, segurança e entrega real em ambientes exigentes.
+    </p>
+    <div class="hero-badges">
+      <span class="badge badge-blue">React.js</span>
+      <span class="badge badge-blue">Next.js</span>
+      <span class="badge badge-blue">Node.js</span>
+      <span class="badge badge-blue">TypeScript</span>
+      <span class="badge badge-gold">Django</span>
+      <span class="badge badge-gold">Python</span>
+      <span class="badge badge-gray">SQL Server</span>
+      <span class="badge badge-gray">Nginx</span>
+      <span class="badge badge-gray">Docker</span>
+      <span class="badge badge-gray">CI/CD</span>
+    </div>
+    <div class="cta-row">
+      <button class="btn-primary" onclick="sendPrompt('Gera um PDF do meu CV com base no meu portefólio')">Descarregar CV</button>
+      <button class="btn-ghost" onclick="sendPrompt('Quero contactar Carlos Vissesse')">Entrar em contacto</button>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="section-label">Stack técnica</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-brand-react" aria-hidden="true" style="color:#00D4FF;font-size:20px"></i></span>
+        <div class="skill-name">React / Next.js</div>
+        <div class="skill-sub">SSR, RSC, Hooks, Redux</div>
+        <div class="skill-level"><div class="skill-fill" style="width:92%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-brand-nodejs" aria-hidden="true" style="color:#3DCA7A;font-size:20px"></i></span>
+        <div class="skill-name">Node.js / Express</div>
+        <div class="skill-sub">REST API, Socket.IO, JWT</div>
+        <div class="skill-level"><div class="skill-fill" style="width:88%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-brand-typescript" aria-hidden="true" style="color:#378ADD;font-size:20px"></i></span>
+        <div class="skill-name">TypeScript</div>
+        <div class="skill-sub">Tipos, Generics, TDD</div>
+        <div class="skill-level"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-brand-python" aria-hidden="true" style="color:#FFB347;font-size:20px"></i></span>
+        <div class="skill-name">Django / DRF</div>
+        <div class="skill-sub">REST, ORM, Auth, Celery</div>
+        <div class="skill-level"><div class="skill-fill gold" style="width:82%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-database" aria-hidden="true" style="color:#8B6FD4;font-size:20px"></i></span>
+        <div class="skill-name">SQL Server</div>
+        <div class="skill-sub">T-SQL, Views, Linked Server</div>
+        <div class="skill-level"><div class="skill-fill" style="width:80%;background:#8B6FD4"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-server" aria-hidden="true" style="color:#00D4FF;font-size:20px"></i></span>
+        <div class="skill-name">Nginx / Linux</div>
+        <div class="skill-sub">Reverse proxy, SSL, Docker</div>
+        <div class="skill-level"><div class="skill-fill" style="width:78%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-network" aria-hidden="true" style="color:#3DCA7A;font-size:20px"></i></span>
+        <div class="skill-name">WebSocket / LDAP</div>
+        <div class="skill-sub">Socket.IO, AD Auth, lib-ad-auth</div>
+        <div class="skill-level"><div class="skill-fill" style="width:75%;background:#3DCA7A"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon"><i class="ti ti-git-branch" aria-hidden="true" style="color:#FFB347;font-size:20px"></i></span>
+        <div class="skill-name">CI/CD / DevOps</div>
+        <div class="skill-sub">GitHub Actions, rsync, PM2</div>
+        <div class="skill-level"><div class="skill-fill gold" style="width:72%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="section-label">Projectos em produção</div>
+    <div class="projects-grid">
+      <div class="project-card cyan">
+        <div class="proj-client">Banco BAI</div>
+        <div class="proj-name">BAI Video Call Platform</div>
+        <div class="proj-desc">Plataforma de videochamada bancária com autenticação LDAP, gestão de filas e integração WebRTC em ambiente Next.js/Nginx.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Next.js</span><span class="proj-tag">Nginx</span><span class="proj-tag">LDAP</span><span class="proj-tag">WebRTC</span>
+        </div>
+      </div>
+      <div class="project-card gold">
+        <div class="proj-client">Africell</div>
+        <div class="proj-name">Wallboard & Monitoring</div>
+        <div class="proj-desc">Dashboard em tempo real para supervisores de contact centre com métricas de KPIs, agentes e chamadas via Socket.IO.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span><span class="proj-tag">Socket.IO</span><span class="proj-tag">Node.js</span><span class="proj-tag">SQL Server</span>
+        </div>
+      </div>
+      <div class="project-card purple">
+        <div class="proj-client">QCC Internal</div>
+        <div class="proj-name">Sistema de Avaliação 360°</div>
+        <div class="proj-desc">Plataforma de avaliação de desempenho com ciclos configuráveis, exportação Excel e critérios ponderados por departamento.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Django</span><span class="proj-tag">DRF</span><span class="proj-tag">React</span><span class="proj-tag">django-import-export</span>
+        </div>
+      </div>
+      <div class="project-card green">
+        <div class="proj-client">QCC / Africell</div>
+        <div class="proj-name">lib-ad-auth</div>
+        <div class="proj-desc">Biblioteca TypeScript publicada no GitHub Packages para autenticação LDAP/Active Directory com suporte a AD e OpenLDAP.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">TypeScript</span><span class="proj-tag">LDAP</span><span class="proj-tag">GitHub Packages</span><span class="proj-tag">npm</span>
+        </div>
+      </div>
+      <div class="project-card cyan">
+        <div class="proj-client">QCC Internal</div>
+        <div class="proj-name">Plataforma ZURI</div>
+        <div class="proj-desc">Sistema omnicanal com três módulos (Assistente, Supervisor, Auditor) desenvolvidos em React com gestão de estado Redux.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span><span class="proj-tag">Redux</span><span class="proj-tag">React Router</span><span class="proj-tag">Jira</span>
+        </div>
+      </div>
+      <div class="project-card gold">
+        <div class="proj-client">QCC / BAI</div>
+        <div class="proj-name">Sistema de Recrutamento</div>
+        <div class="proj-desc">Aplicação de gestão de candidaturas com fluxo de aprovação, validação de formulários e integração com base de dados SQL Server.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span><span class="proj-tag">Node.js</span><span class="proj-tag">SQL Server</span><span class="proj-tag">Nginx</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="section-label">Percurso profissional</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="tl-date">2022 — presente</div>
+        <div class="tl-role">Full Stack Developer</div>
+        <div class="tl-company">Quality Contact Center (QCC) · Luanda</div>
+        <div class="tl-desc">Desenvolvimento e manutenção de plataformas críticas para clientes como Banco BAI e Africell. Arquitectura de sistemas de autenticação LDAP, dashboards em tempo real, APIs REST e pipelines CI/CD em produção.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">Ongoing</div>
+        <div class="tl-role">Contribuidor Open Source</div>
+        <div class="tl-company">GitHub · @vissesse</div>
+        <div class="tl-desc">Publicação e manutenção da biblioteca @vissesse/lib-ad-auth no GitHub Packages. Documentação técnica em Markdown para APIs REST e módulos TypeScript.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="section-label">Contacto</div>
+    <div class="contact-row">
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+        <div>
+          <div class="contact-label">Localização</div>
+          <div class="contact-value">Luanda, Angola</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-brand-github" aria-hidden="true"></i></div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">@vissesse</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-briefcase" aria-hidden="true"></i></div>
+        <div>
+          <div class="contact-label">Disponibilidade</div>
+          <div class="contact-value">Aberto a propostas</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-code" aria-hidden="true"></i></div>
+        <div>
+          <div class="contact-label">Stack principal</div>
+          <div class="contact-value">React · Node · Django</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Carlos Vissesse · Full Stack Developer · Luanda, Angola</span><br>
+    <span style="color:#1E2A4A;margin-top:4px;display:block">Built with precision · Deployed with purpose</span>
+  </footer>
+</div>
