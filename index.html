@@ -1,548 +1,327 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carlos Vissesse — Full Stack Developer</title>
-<meta name="description" content="Portefólio técnico de Carlos Vissesse, Full Stack Developer em Luanda, Angola. React, Next.js, Node.js, Django, SQL Server.">
-<meta property="og:title" content="Carlos Vissesse — Full Stack Developer">
-<meta property="og:description" content="Arquitecto de sistemas para África. Plataformas críticas para banca e telecomunicações em Angola.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://vissesse.github.io">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  :root {
-    --navy:      #0A0F1E;
-    --navy-2:    #0F1628;
-    --navy-3:    #151E35;
-    --border:    #1E2A4A;
-    --border-2:  #2A3550;
-    --cyan:      #00D4FF;
-    --cyan-dim:  rgba(0,212,255,0.08);
-    --gold:      #FFB347;
-    --gold-dim:  rgba(255,179,71,0.08);
-    --text-1:    #F0F4FF;
-    --text-2:    #C0CCDD;
-    --text-3:    #8899BB;
-    --text-4:    #4A5878;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--navy);
-    color: var(--text-1);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  .mono { font-family: 'JetBrains Mono', monospace; }
-
-  /* ── NAV ── */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1rem 2rem;
-    background: rgba(10,15,30,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 0.5px solid var(--border);
-  }
-  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--cyan); }
-  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
-  .nav-links a {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    color: var(--text-3); text-decoration: none;
-    transition: color .2s;
-  }
-  .nav-links a:hover { color: var(--cyan); }
-
-  /* ── CURSOR ── */
-  .cursor {
-    display: inline-block; width: 3px; height: .85em;
-    background: var(--cyan); vertical-align: -.05em; margin-left: 3px;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-  /* ── HERO ── */
-  .hero {
-    max-width: 960px; margin: 0 auto;
-    padding: 6rem 2rem 4.5rem;
-  }
-  .hero-eyebrow {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    color: var(--cyan); letter-spacing: .18em; text-transform: uppercase;
-    display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;
-  }
-  .hero-eyebrow::before {
-    content: ''; display: inline-block;
-    width: 28px; height: 1px; background: var(--cyan);
-  }
-  .hero-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(2.4rem, 5.5vw, 4rem);
-    font-weight: 700; line-height: 1.05; color: var(--text-1);
-    margin-bottom: .5rem;
-  }
-  .hero-tagline {
-    font-family: 'JetBrains Mono', monospace; font-size: 1rem;
-    color: var(--text-3); margin-bottom: 1.6rem;
-  }
-  .hero-tagline span { color: var(--gold); }
-  .hero-bio {
-    font-size: .975rem; color: var(--text-2);
-    line-height: 1.8; max-width: 640px; margin-bottom: 2.2rem;
-  }
-  .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2.4rem; }
-  .badge {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    padding: 4px 11px; border-radius: 4px; border: .5px solid;
-  }
-  .badge-cyan  { border-color: rgba(0,212,255,.25); color: var(--cyan);  background: var(--cyan-dim); }
-  .badge-gold  { border-color: rgba(255,179,71,.25); color: var(--gold);  background: var(--gold-dim); }
-  .badge-gray  { border-color: var(--border-2);      color: var(--text-3); background: var(--navy-2); }
-  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn-primary {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    padding: 10px 24px; background: var(--cyan); color: var(--navy);
-    border: none; border-radius: 4px; cursor: pointer; font-weight: 700;
-    text-decoration: none; display: inline-block;
-    transition: opacity .2s, transform .15s;
-  }
-  .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
-  .btn-ghost {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    padding: 10px 24px; background: transparent; color: var(--text-3);
-    border: .5px solid var(--border-2); border-radius: 4px; cursor: pointer;
-    text-decoration: none; display: inline-block;
-    transition: border-color .2s, color .2s, transform .15s;
-  }
-  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-1px); }
-
-  /* ── DIVISOR ── */
-  .divider {
-    height: .5px; margin: 0 2rem;
-    background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
-  }
-
-  /* ── SECÇÃO ── */
-  .section { max-width: 960px; margin: 0 auto; padding: 3.5rem 2rem; }
-  .section-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    color: var(--cyan); letter-spacing: .22em; text-transform: uppercase;
-    display: flex; align-items: center; gap: 12px; margin-bottom: 2rem;
-  }
-  .section-label::after {
-    content: ''; flex: 1; height: .5px; background: var(--border);
-  }
-
-  /* ── SKILLS ── */
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
-  .skill-card {
-    background: var(--navy-2); border: .5px solid var(--border);
-    border-radius: 8px; padding: 1.1rem 1.3rem;
-    transition: border-color .2s, transform .2s; cursor: default;
-  }
-  .skill-card:hover { border-color: rgba(0,212,255,.25); transform: translateY(-2px); }
-  .skill-icon { font-size: 1.3rem; margin-bottom: 8px; display: block; }
-  .skill-name {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    color: var(--text-1); font-weight: 500; margin-bottom: 3px;
-  }
-  .skill-sub { font-size: 11px; color: var(--text-4); line-height: 1.5; }
-  .skill-bar { margin-top: 10px; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
-  .skill-fill { height: 100%; border-radius: 1px; background: var(--cyan); }
-  .skill-fill.gold { background: var(--gold); }
-  .skill-fill.purple { background: #8B6FD4; }
-  .skill-fill.green  { background: #3DCA7A; }
-
-  /* ── PROJECTOS ── */
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-  .project-card {
-    background: var(--navy-2); border: .5px solid var(--border);
-    border-radius: 10px; padding: 1.5rem;
-    position: relative; overflow: hidden;
-    transition: border-color .2s, transform .2s;
-  }
-  .project-card:hover { border-color: rgba(0,212,255,.25); transform: translateY(-2px); }
-  .project-card::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 2px;
-  }
-  .accent-cyan::before   { background: var(--cyan); }
-  .accent-gold::before   { background: var(--gold); }
-  .accent-purple::before { background: #8B6FD4; }
-  .accent-green::before  { background: #3DCA7A; }
-  .proj-client {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    color: var(--text-4); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 5px;
-  }
-  .proj-name { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
-  .proj-desc { font-size: 12.5px; color: #6A7A99; line-height: 1.65; margin-bottom: 14px; }
-  .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .proj-tag {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    padding: 2px 8px; background: var(--navy-3);
-    border: .5px solid var(--border-2); border-radius: 3px; color: #6A7A99;
-  }
-
-  /* ── TIMELINE (experiência) ── */
-  .timeline { position: relative; padding-left: 2rem; }
-  .timeline::before {
-    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
-    width: .5px; background: var(--border);
-  }
-  .tl-item { position: relative; margin-bottom: 2.2rem; }
-  .tl-item::before {
-    content: ''; position: absolute; left: -2rem; top: 8px;
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--cyan); border: 2px solid var(--navy); margin-left: -3px;
-  }
-  .tl-date  { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-4); margin-bottom: 4px; }
-  .tl-role  { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 2px; }
-  .tl-company { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); margin-bottom: 8px; }
-  .tl-desc  { font-size: 13px; color: #6A7A99; line-height: 1.7; }
-  .tl-desc ul { padding-left: 1.1rem; margin-top: 6px; }
-  .tl-desc li { margin-bottom: 4px; }
-
-  /* ── CONTACTO ── */
-  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-  .contact-card {
-    background: var(--navy-2); border: .5px solid var(--border);
-    border-radius: 8px; padding: 1rem 1.2rem;
-    display: flex; align-items: center; gap: 12px;
-    text-decoration: none; transition: border-color .2s;
-  }
-  .contact-card:hover { border-color: rgba(0,212,255,.3); }
-  .contact-icon {
-    width: 38px; height: 38px; border-radius: 7px; flex-shrink: 0;
-    background: var(--cyan-dim); border: .5px solid rgba(0,212,255,.2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-  .contact-lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-4); margin-bottom: 2px; text-transform: uppercase; letter-spacing: .08em; }
-  .contact-val { font-size: 13px; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .contact-card > div { min-width: 0; flex: 1; overflow: hidden; }
-  .contact-card { overflow: hidden; }
-
-  /* ── FOOTER ── */
-  .footer {
-    border-top: .5px solid var(--border); padding: 1.5rem 2rem;
-    text-align: center; font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: var(--text-4);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    .nav-links { display: none; }
-    .hero { padding: 4rem 1.2rem 3rem; }
-    .section { padding: 2.5rem 1.2rem; }
-    .divider { margin: 0 1.2rem; }
-    .hero-name { font-size: 2.1rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cursor { animation: none; opacity: 1; }
-    * { transition: none !important; transform: none !important; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carlos Vissesse — Web Full Stack Developer</title>
+  <meta name="description"
+    content="Portefólio técnico de Carlos Vissesse, Web Full Stack Developer em Luanda, Angola. React, Next.js, Node.js, Django, SQL Server.">
+  <meta property="og:title" content="Carlos Vissesse — Web Full Stack Developer">
+  <meta property="og:description"
+    content="Arquitecto de software. Plataformas críticas para banca e telecomunicações em Angola.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vissesse.github.io">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav class="nav" aria-label="Navegação principal">
-  <span class="mono" style="font-size:13px;color:var(--cyan)">cv@qcc:~$<span class="cursor" aria-hidden="true"></span></span>
-  <ul class="nav-links">
-    <li><a href="#stack">stack</a></li>
-    <li><a href="#projectos">projectos</a></li>
-    <li><a href="#experiencia">percurso</a></li>
-    <li><a href="#contacto">contacto</a></li>
-  </ul>
-</nav>
+  <!-- NAV -->
+  <nav class="nav" aria-label="Navegação principal">
+    <span class="mono" style="font-size:13px;color:var(--cyan)">cv@qcc:~$<span class="cursor"
+        aria-hidden="true"></span></span>
+    <ul class="nav-links">
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#projectos">projectos</a></li>
+      <li><a href="#experiencia">percurso</a></li>
+      <li><a href="#contacto">contacto</a></li>
+    </ul>
+  </nav>
 
-<!-- HERO -->
-<header class="hero" id="top">
-  <div class="hero-eyebrow">Full Stack Developer · Luanda, Angola</div>
-  <h1 class="hero-name">Carlos Vissesse<span class="cursor" aria-hidden="true"></span></h1>
-  <p class="hero-tagline">Arquitecto de sistemas para <span>África</span></p>
-  <p class="hero-bio">
-    Construo plataformas críticas para banca e telecomunicações em Angola — do front-end
-    em React ao infra em Nginx e SQL Server. Entrego de ponta a ponta com foco em robustez,
-    segurança e operação real em ambientes exigentes.
-  </p>
-  <div class="hero-badges">
-    <span class="badge badge-cyan">React.js</span>
-    <span class="badge badge-cyan">Next.js</span>
-    <span class="badge badge-cyan">Node.js</span>
-    <span class="badge badge-cyan">TypeScript</span>
-    <span class="badge badge-gold">Django</span>
-    <span class="badge badge-gold">Python</span>
-    <span class="badge badge-gray">SQL Server</span>
-    <span class="badge badge-gray">PostgreSQL</span>
-    <span class="badge badge-gray">Nginx</span>
-    <span class="badge badge-gray">Docker</span>
-    <span class="badge badge-gray">CI/CD</span>
-  </div>
-  <div class="cta-row">
-    <a href="https://github.com/vissesse" target="_blank" rel="noopener" class="btn-primary">GitHub → vissesse</a>
-    <a href="#contacto" class="btn-ghost">Entrar em contacto</a>
-  </div>
-</header>
-
-<div class="divider"></div>
-
-<!-- STACK -->
-<section class="section" id="stack" aria-labelledby="stack-heading">
-  <div class="section-label" id="stack-heading">Stack técnica</div>
-  <div class="skills-grid">
-
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">⚛️</span>
-      <div class="skill-name">React / Next.js</div>
-      <div class="skill-sub">SSR, RSC, Hooks, Redux, React Router</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-eyebrow">Web Full Stack Developer · Luanda, Angola</div>
+    <h1 class="hero-name">Carlos Vissesse<span class="cursor" aria-hidden="true"></span></h1>
+    <p class="hero-tagline">Desenvolvedor <span>web</span> fullstack</p>
+    <p class="hero-bio">
+      Construo plataformas críticas para banca e telecomunicações em Angola — do front-end
+      em React ao infra em Nginx e SQL Server. Entrego de ponta a ponta com foco em robustez,
+      segurança e operação real em ambientes exigentes.
+    </p>
+    <div class="hero-badges">
+      <span class="badge badge-cyan">Node.js</span>
+      <span class="badge badge-cyan">TypeScript</span>
+      <span class="badge badge-gold">Django</span>
+      <span class="badge badge-gold">Python</span>
+      <span class="badge badge-gray">SQL Server</span>
+      <span class="badge badge-gray">PostgreSQL</span>
+      <span class="badge badge-cyan">React.js</span>
+      <span class="badge badge-cyan">Next.js</span>
+      <span class="badge badge-gray">Nginx</span>
+      <span class="badge badge-gray">Docker</span>
+      <span class="badge badge-gray">CI/CD</span>
     </div>
-
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">🟢</span>
-      <div class="skill-name">Node.js / Express</div>
-      <div class="skill-sub">REST API, Socket.IO, JWT, PM2</div>
-      <div class="skill-bar"><div class="skill-fill green" style="width:88%"></div></div>
+    <div class="cta-row">
+      <a href="https://github.com/vissesse" target="_blank" rel="noopener" class="btn-primary">GitHub → vissesse</a>
+      <a href="#contacto" class="btn-ghost">Entrar em contacto</a>
     </div>
+  </header>
 
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">🔷</span>
-      <div class="skill-name">TypeScript</div>
-      <div class="skill-sub">Tipos, Generics, Zod, TDD</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:86%"></div></div>
+  <div class="divider"></div>
+
+  <!-- STACK -->
+  <section class="section" id="stack" aria-labelledby="stack-heading">
+    <div class="section-label" id="stack-heading">Stack técnica</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">🟢</span>
+        <div class="skill-name">Node.js / Express</div>
+        <div class="skill-sub">REST API, Socket.IO, JWT, PM2</div>
+        <div class="skill-bar">
+          <div class="skill-fill green" style="width:88%"></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">🔷</span>
+        <div class="skill-name">TypeScript</div>
+        <div class="skill-sub">Tipos, Generics, Zod, TDD</div>
+        <div class="skill-bar">
+          <div class="skill-fill" style="width:88%"></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">🐍</span>
+        <div class="skill-name">Django / DRF</div>
+        <div class="skill-sub">REST, ORM, Auth, Celery, Export</div>
+        <div class="skill-bar">
+          <div class="skill-fill gold" style="width:83%"></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">🗄️</span>
+        <div class="skill-name">SQL Server</div>
+        <div class="skill-sub">T-SQL, Views, Linked Server, NDF</div>
+        <div class="skill-bar">
+          <div class="skill-fill purple" style="width:80%"></div>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">⚛️</span>
+        <div class="skill-name">React / Next.js</div>
+        <div class="skill-sub">SSR, RSC, Hooks, Redux, React Router</div>
+        <div class="skill-bar">
+          <div class="skill-fill" style="width:78%"></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">🌐</span>
+        <div class="skill-name">Nginx / Linux</div>
+        <div class="skill-sub">Reverse proxy, SSL, caching, logs</div>
+        <div class="skill-bar">
+          <div class="skill-fill" style="width:77%"></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">🔐</span>
+        <div class="skill-name">LDAP / Active Directory</div>
+        <div class="skill-sub">AD Auth, OpenLDAP, lib-ad-auth</div>
+        <div class="skill-bar">
+          <div class="skill-fill" style="width:70%"></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon" aria-hidden="true">⚙️</span>
+        <div class="skill-name">CI/CD / DevOps</div>
+        <div class="skill-sub">GitHub Actions, Docker, rsync, PM2</div>
+        <div class="skill-bar">
+          <div class="skill-fill gold" style="width:70%"></div>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">🐍</span>
-      <div class="skill-name">Django / DRF</div>
-      <div class="skill-sub">REST, ORM, Auth, Celery, Export</div>
-      <div class="skill-bar"><div class="skill-fill gold" style="width:83%"></div></div>
+  <div class="divider"></div>
+
+  <!-- PROJECTOS -->
+  <section class="section" id="projectos" aria-labelledby="proj-heading">
+    <div class="section-label" id="proj-heading">Projectos em produção</div>
+    <div class="projects-grid">
+
+      <article class="project-card accent-cyan">
+        <div class="proj-client">QCC / Banco BAI</div>
+        <h3 class="proj-name">BAI Video Call Platform</h3>
+        <p class="proj-desc">Plataforma de vídeo-chamada bancária em Next.js com autenticação LDAP, gestão de filas e
+          integração WebRTC. Resolução de bloqueio de microfone cross-origin em iframe via MutationObserver.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Next.js</span>
+          <span class="proj-tag">Nginx</span>
+          <span class="proj-tag">LDAP</span>
+          <span class="proj-tag">WebRTC</span>
+          <span class="proj-tag">Node.js</span>
+        </div>
+      </article>
+
+      <article class="project-card accent-gold">
+        <div class="proj-client">QCC / Africell</div>
+        <h3 class="proj-name">Wallboard & Monitoring</h3>
+        <p class="proj-desc">Dashboard em tempo real para supervisores de contact centre com métricas de KPIs, estado de
+          agentes e volume de chamadas via Socket.IO. Deploy em produção via GitHub Actions.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span>
+          <span class="proj-tag">Socket.IO</span>
+          <span class="proj-tag">Node.js</span>
+          <span class="proj-tag">SQL Server</span>
+          <span class="proj-tag">CI/CD</span>
+        </div>
+      </article>
+
+      <article class="project-card accent-purple">
+        <div class="proj-client">QCC Internal</div>
+        <h3 class="proj-name">Sistema de Avaliação 360°</h3>
+        <p class="proj-desc">Plataforma de avaliação de desempenho com ciclos configuráveis por critério, exportação
+          Excel e API REST Django. Correcção de discrepâncias em django-import-export com anotação de querysets.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Django</span>
+          <span class="proj-tag">DRF</span>
+          <span class="proj-tag">React</span>
+          <span class="proj-tag">TypeScript</span>
+        </div>
+      </article>
+
+      <article class="project-card accent-green">
+        <div class="proj-client">Open Source · GitHub Packages</div>
+        <h3 class="proj-name">@vissesse/lib-ad-auth</h3>
+        <p class="proj-desc">Biblioteca TypeScript para autenticação LDAP com suporte a Active Directory e OpenLDAP.
+          Publicada no GitHub Packages via GitHub Actions com versioning semântico.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">TypeScript</span>
+          <span class="proj-tag">LDAP</span>
+          <span class="proj-tag">Active Directory</span>
+          <span class="proj-tag">GitHub Actions</span>
+        </div>
+      </article>
+
+      <article class="project-card accent-cyan">
+        <div class="proj-client">QCC Internal</div>
+        <h3 class="proj-name">Plataforma ZURI — Omnicanal</h3>
+        <p class="proj-desc">Sistema omnicanal com três módulos (Assistente, Supervisor, Auditor) em React com Redux.
+          Gestão de estado global, React Router DOM e integração com APIs REST.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span>
+          <span class="proj-tag">Redux</span>
+          <span class="proj-tag">React Router</span>
+          <span class="proj-tag">Node.js</span>
+        </div>
+      </article>
+
+      <article class="project-card accent-gold">
+        <div class="proj-client">QCC Internal</div>
+        <h3 class="proj-name">Sistema de Recrutamento</h3>
+        <p class="proj-desc">Aplicação de gestão de candidaturas com fluxo de aprovação, validação de formulários com
+          react-hook-form e zod, integração SQL Server e SPA servida via Nginx com no-cache em index.html.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span>
+          <span class="proj-tag">Node.js</span>
+          <span class="proj-tag">SQL Server</span>
+          <span class="proj-tag">Nginx</span>
+        </div>
+      </article>
+
     </div>
+  </section>
 
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">🗄️</span>
-      <div class="skill-name">SQL Server</div>
-      <div class="skill-sub">T-SQL, Views, Linked Server, NDF</div>
-      <div class="skill-bar"><div class="skill-fill purple" style="width:80%"></div></div>
+  <div class="divider"></div>
+
+  <!-- EXPERIÊNCIA -->
+  <section class="section" id="experiencia" aria-labelledby="exp-heading">
+    <div class="section-label" id="exp-heading">Percurso profissional</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date">2022 — presente</div>
+        <div class="tl-role">Full Stack Developer</div>
+        <div class="tl-company">Quality Contact Center (QCC) · Luanda, Angola</div>
+        <div class="tl-desc">
+          Desenvolvimento e manutenção de plataformas críticas para clientes como Banco BAI e Africell.
+          <ul>
+            <li>Arquitectura de sistemas de autenticação LDAP/AD publicada como biblioteca npm</li>
+            <li>Configuração de infra Nginx com SSL, reverse proxy e pipelines CI/CD via GitHub Actions</li>
+            <li>Gestão de SQL Server em produção: queries, views, linked servers e gestão de disco (NDF)</li>
+            <li>Liderança técnica no módulo de avaliação 360° com Django REST + React</li>
+            <li>Desenvolvimento de dashboards em tempo real com Socket.IO para supervisores de call centre</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Contínuo</div>
+        <div class="tl-role">Contribuidor Open Source</div>
+        <div class="tl-company">GitHub · @vissesse</div>
+        <div class="tl-desc">
+          Publicação e manutenção de <em>@vissesse/lib-ad-auth</em> no GitHub Packages — biblioteca TypeScript
+          para autenticação LDAP com suporte a AD e OpenLDAP, com documentação técnica em Markdown.
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">🌐</span>
-      <div class="skill-name">Nginx / Linux</div>
-      <div class="skill-sub">Reverse proxy, SSL, caching, logs</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+  <div class="divider"></div>
+
+  <!-- CONTACTO -->
+  <section class="section" id="contacto" aria-labelledby="contact-heading">
+    <div class="section-label" id="contact-heading">Contacto</div>
+    <div class="contact-grid">
+
+      <div class="contact-card">
+        <div class="contact-icon" style="background:var(--gold-dim);border-color:rgba(255,179,71,.2)"
+          aria-hidden="true">✅</div>
+        <div>
+          <div class="contact-lbl">Disponibilidade</div>
+          <div class="contact-val" style="color:var(--gold)">Aberto a novos desafios</div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon" aria-hidden="true">📍</div>
+        <div>
+          <div class="contact-lbl">Localização</div>
+          <div class="contact-val">Belas, Luanda, Angola</div>
+        </div>
+      </div>
+
+
+      <a href="https://wa.me/244945083118" target="_blank" rel="noopener" class="contact-card">
+        <div class="contact-icon" style="background:rgba(37,211,102,0.08);border-color:rgba(37,211,102,0.2)"
+          aria-hidden="true">💬</div>
+        <div>
+          <div class="contact-lbl">WhatsApp</div>
+          <div class="contact-val" style="color:#25D366">+244 945 083 118</div>
+        </div>
+      </a>
+
+      <a href="mailto:cvissesse@gmail.com" class="contact-card">
+        <div class="contact-icon" style="background:rgba(234,67,53,0.08);border-color:rgba(234,67,53,0.2)"
+          aria-hidden="true">✉️</div>
+        <div>
+          <div class="contact-lbl">Email</div>
+          <div class="contact-val" style="color:#EA4335">cvissesse@gmail.com</div>
+        </div>
+      </a>
+
     </div>
+  </section>
 
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">🔐</span>
-      <div class="skill-name">LDAP / Active Directory</div>
-      <div class="skill-sub">AD Auth, OpenLDAP, lib-ad-auth</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
-    </div>
-
-    <div class="skill-card">
-      <span class="skill-icon" aria-hidden="true">⚙️</span>
-      <div class="skill-name">CI/CD / DevOps</div>
-      <div class="skill-sub">GitHub Actions, Docker, rsync, PM2</div>
-      <div class="skill-bar"><div class="skill-fill gold" style="width:74%"></div></div>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- PROJECTOS -->
-<section class="section" id="projectos" aria-labelledby="proj-heading">
-  <div class="section-label" id="proj-heading">Projectos em produção</div>
-  <div class="projects-grid">
-
-    <article class="project-card accent-cyan">
-      <div class="proj-client">Banco BAI</div>
-      <h3 class="proj-name">BAI Video Call Platform</h3>
-      <p class="proj-desc">Plataforma de vídeo-chamada bancária em Next.js com autenticação LDAP, gestão de filas e integração WebRTC. Resolução de bloqueio de microfone cross-origin em iframe via MutationObserver.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">Next.js</span>
-        <span class="proj-tag">Nginx</span>
-        <span class="proj-tag">LDAP</span>
-        <span class="proj-tag">WebRTC</span>
-        <span class="proj-tag">Node.js</span>
-      </div>
-    </article>
-
-    <article class="project-card accent-gold">
-      <div class="proj-client">Africell</div>
-      <h3 class="proj-name">Wallboard & Monitoring</h3>
-      <p class="proj-desc">Dashboard em tempo real para supervisores de contact centre com métricas de KPIs, estado de agentes e volume de chamadas via Socket.IO. Deploy em produção via GitHub Actions.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">Socket.IO</span>
-        <span class="proj-tag">Node.js</span>
-        <span class="proj-tag">SQL Server</span>
-        <span class="proj-tag">CI/CD</span>
-      </div>
-    </article>
-
-    <article class="project-card accent-purple">
-      <div class="proj-client">QCC Internal</div>
-      <h3 class="proj-name">Sistema de Avaliação 360°</h3>
-      <p class="proj-desc">Plataforma de avaliação de desempenho com ciclos configuráveis por critério, exportação Excel e API REST Django. Correcção de discrepâncias em django-import-export com anotação de querysets.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">Django</span>
-        <span class="proj-tag">DRF</span>
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">TypeScript</span>
-      </div>
-    </article>
-
-    <article class="project-card accent-green">
-      <div class="proj-client">Open Source · GitHub Packages</div>
-      <h3 class="proj-name">@vissesse/lib-ad-auth</h3>
-      <p class="proj-desc">Biblioteca TypeScript para autenticação LDAP com suporte a Active Directory e OpenLDAP. Publicada no GitHub Packages via GitHub Actions com versioning semântico.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">TypeScript</span>
-        <span class="proj-tag">LDAP</span>
-        <span class="proj-tag">Active Directory</span>
-        <span class="proj-tag">GitHub Actions</span>
-      </div>
-    </article>
-
-    <article class="project-card accent-cyan">
-      <div class="proj-client">QCC / Africell</div>
-      <h3 class="proj-name">Plataforma ZURI — Omnicanal</h3>
-      <p class="proj-desc">Sistema omnicanal com três módulos (Assistente, Supervisor, Auditor) em React com Redux. Gestão de estado global, React Router DOM e integração com APIs REST.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">Redux</span>
-        <span class="proj-tag">React Router</span>
-        <span class="proj-tag">Node.js</span>
-      </div>
-    </article>
-
-    <article class="project-card accent-gold">
-      <div class="proj-client">QCC / BAI</div>
-      <h3 class="proj-name">Sistema de Recrutamento</h3>
-      <p class="proj-desc">Aplicação de gestão de candidaturas com fluxo de aprovação, validação de formulários com react-hook-form e zod, integração SQL Server e SPA servida via Nginx com no-cache em index.html.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">Node.js</span>
-        <span class="proj-tag">SQL Server</span>
-        <span class="proj-tag">Nginx</span>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- EXPERIÊNCIA -->
-<section class="section" id="experiencia" aria-labelledby="exp-heading">
-  <div class="section-label" id="exp-heading">Percurso profissional</div>
-  <div class="timeline">
-
-    <div class="tl-item">
-      <div class="tl-date">2022 — presente</div>
-      <div class="tl-role">Full Stack Developer</div>
-      <div class="tl-company">Quality Contact Center (QCC) · Luanda, Angola</div>
-      <div class="tl-desc">
-        Desenvolvimento e manutenção de plataformas críticas para clientes como Banco BAI e Africell.
-        <ul>
-          <li>Arquitectura de sistemas de autenticação LDAP/AD publicada como biblioteca npm</li>
-          <li>Configuração de infra Nginx com SSL, reverse proxy e pipelines CI/CD via GitHub Actions</li>
-          <li>Gestão de SQL Server em produção: queries, views, linked servers e gestão de disco (NDF)</li>
-          <li>Liderança técnica no módulo de avaliação 360° com Django REST + React</li>
-          <li>Desenvolvimento de dashboards em tempo real com Socket.IO para supervisores de call centre</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-date">Contínuo</div>
-      <div class="tl-role">Contribuidor Open Source</div>
-      <div class="tl-company">GitHub · @vissesse</div>
-      <div class="tl-desc">
-        Publicação e manutenção de <em>@vissesse/lib-ad-auth</em> no GitHub Packages — biblioteca TypeScript
-        para autenticação LDAP com suporte a AD e OpenLDAP, com documentação técnica em Markdown.
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CONTACTO -->
-<section class="section" id="contacto" aria-labelledby="contact-heading">
-  <div class="section-label" id="contact-heading">Contacto</div>
-  <div class="contact-grid">
-
-    <a href="https://github.com/vissesse" target="_blank" rel="noopener" class="contact-card">
-      <div class="contact-icon" aria-hidden="true">🐙</div>
-      <div>
-        <div class="contact-lbl">GitHub</div>
-        <div class="contact-val">github.com/vissesse</div>
-      </div>
-    </a>
-   
-    <div class="contact-card">
-      <div class="contact-icon" aria-hidden="true">📍</div>
-      <div>
-        <div class="contact-lbl">Localização</div>
-        <div class="contact-val">Luanda, Angola</div>
-      </div>
-    </div>
-
-    <div class="contact-card">
-      <div class="contact-icon" aria-hidden="true">💼</div>
-      <div>
-        <div class="contact-lbl">Empresa</div>
-        <div class="contact-val">Quality Contact Center</div>
-      </div>
-    </div>
-
-    <div class="contact-card">
-      <div class="contact-icon" style="background:var(--gold-dim);border-color:rgba(255,179,71,.2)" aria-hidden="true">✅</div>
-      <div>
-        <div class="contact-lbl">Disponibilidade</div>
-        <div class="contact-val" style="color:var(--gold)">Aberto a propostas</div>
-      </div>
-    </div>
-
-    <a href="https://wa.me/s/vissesse" target="_blank" rel="noopener" class="contact-card">
-      <div class="contact-icon" style="background:rgba(37,211,102,0.08);border-color:rgba(37,211,102,0.2)" aria-hidden="true">💬</div>
-      <div>
-        <div class="contact-lbl">WhatsApp</div>
-        <div class="contact-val" style="color:#25D366">@vissesse</div>
-      </div>
-    </a>
-
-    <a href="mailto:cvissesse@gmail.com" class="contact-card">
-      <div class="contact-icon" style="background:rgba(234,67,53,0.08);border-color:rgba(234,67,53,0.2)" aria-hidden="true">✉️</div>
-      <div>
-        <div class="contact-lbl">Email</div>
-        <div class="contact-val" style="color:#EA4335">cvissesse@gmail.com</div>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <span>Carlos Vissesse · Full Stack Developer · Luanda, Angola</span><br>
-  <span style="color:var(--border-2);margin-top:4px;display:block">
-    vissesse.github.io · Built with precision · Deployed with purpose
-  </span>
-</footer>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>Carlos Vissesse · Full Stack Developer · Luanda, Angola</span><br>
+    <span style="color:var(--border-2);margin-top:4px;display:block">
+      vissesse.github.io · Built with precision · Deployed with purpose
+    </span>
+  </footer>
 
 </body>
+
 </html>
